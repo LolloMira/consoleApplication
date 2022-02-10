@@ -3,7 +3,7 @@
 const { log } = require('console');
 const fs = require('fs');
 
-const {Parser, PartialInvalidStringError, InvalidStringError, EmptyStringError} = require('./parser.js');
+const {Parser, PartialInvalidStringError, InvalidStringError, EmptyStringError} = require('./parser2.js');
 
 console.log(process.argv.slice(2));
 
@@ -22,9 +22,9 @@ try {
     console.log(data);
     console.log(array);
 
-    let sum = array.reduce((p,c)=>p+c)
+    //let sum = array.reduce((p,c)=>p+c)
 
-    console.log(sum);
+    //console.log(sum);
 } catch (err) {
   console.error(err);
 }

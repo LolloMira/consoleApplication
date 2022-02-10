@@ -5,14 +5,15 @@ class Parser {
             throw new EmptyStringError("Stringa vuota")
         }
         const tempString = Parser.ReplaceAll(string);
-        const tempArray = Parser.Splitter(tempString); 
-        const newArray = Parser.checkParse(tempArray);
-        if (newArray[0].length === 0) {
-            throw new InvalidStringError("Stringa Invalida");
-        } else if (newArray[0].length > 0 && newArray[1]){
-            throw new PartialInvalidStringError("Stringa Parzialmente Valida", newArray[0])
+        const tempArray = Parser.Splitter(tempString);
+        let newArray = []
+        for (let i = 0; i < tempArray.length; i++) {
+            let intArray = Parser.checkParse(tempArray[i])
+            newArray.push(intArray)
+
         }
-        return newArray[0];
+        //const newArray = Parser.checkParse(tempArray);
+        return newArray;
     }
   
     static ReplaceAll(string){
@@ -24,22 +25,36 @@ class Parser {
     }
   
     static Splitter(string){
-        return string.split("; ");
+        let tempString = string.split("\r\n");
+        let resultArray = [];
+        for (let i = 0; i < tempString.length; i++) {
+            let tempArray = tempString[i].split("; ")
+            resultArray.push(tempArray)
+        }
+        return resultArray;
     }
   
     static checkParse(array){
         let newArray = [];
- 
         for (let i = 0; i < array.length; i++) {
             let numbers = parseFloat(array[i])
             if (!isNaN(numbers)) {
                 newArray.push(numbers);
             } else{
-                newArray.push(array[i])
+                if (array[i] === "true") {
+                    let boolValue = (array[i] == "true")
+                    newArray.push(boolValue);
+                }
+                else if (array[i] === "false") {
+                    let boolValue2 = (array[i] == "false")
+                    newArray.push(boolValue2);
+                } else{
+                    newArray.push(array[i])
+                }
+                
             }
         }
-        let passArray = [newArray, flagNaN]
-        return passArray;
+        return newArray;
     }
   }
   
